@@ -1,18 +1,38 @@
 {% extends 'main/base.html'%}
-
 {% block title %}
 {{ title }}
 {%endblock%}
 
 {% block content %}
     <h1>Главная страница</h1>
-    {% if tasks %}
-        {% for el in tasks %}
-            <div class = "alert alert-warning mt-2">
-                <h3>{{ el.title }}</h3>
-                <p>{{ el.task }}</p>
+
+    {% if tasks or newtasks %}
+        {% if tasks %}
+            {% for el in tasks %}
+                <div class = "alert alert-warning mt-2">
+                    <h3>{{ el.title }}</h3>
+                    <p>{{ el.task }}</p>
+                    <button type="delete" class="btn btn-success">Удалить</button>
+                </div>
+            {% endfor %}
+        {%endif%}
+        {% if newtasks %}
+        {% for el in newtasks %}
+            <div class = "card-deck mt-2" method="post">
+                <div class = "card">
+                    <div class = "card-body">
+                        <h3 class = "card-title">{{ el.title }}</h3>
+                        <p class="card-text">{{ el.task }}</p>
+                        <p class="card-text">Начал {{el.creation_date}}</p>
+                        <p class="card-text">Срок {{el.end_date}}</p>
+                        <form action="{% url 'delete' el.id %}">
+                            <button type="delete" class="btn btn-success">Удалить</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         {% endfor %}
+        {%endif%}
     {%else%}
     <p>У нас нет записей!</p>
     {% endif %}
