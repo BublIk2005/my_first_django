@@ -10,6 +10,8 @@
     {% csrf_token %}
     {{ form.title }}<br>
     {{ form.task }}<br>
+    {{ form.creation_date}}<br>
+    {{ form.end_date}}<br>
     
     <button type="submit" class="btn btn-success">Добавить</button>
     <span>{{error}}</span>
